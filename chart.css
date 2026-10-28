@@ -1,0 +1,302 @@
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background: #E5E7EB;
+    padding: 24px;
+    display: flex;
+    justify-content: center;
+    font-family: 'Inter', serif;
+    -webkit-font-smoothing: antialiased;
+  }
+  #horoscope-comp {
+    width: 800px;
+    background-color: #FFFCF5;
+    font-family: 'Inter', serif;
+    color: #181D27;
+  }
+  .grid-4x4 {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-template-rows: repeat(4, auto);
+    border: 1px solid #D5D7DA;
+    position: relative;
+    background: linear-gradient(rgba(255,252,245,0.5), rgba(255,252,245,0.5)), url('Trongdong.webp');
+    background-repeat: no-repeat;
+    background-position: 50%;
+    background-size: contain;
+  }
+  .cung-cell {
+    position: relative;
+    border: 0.5px solid #E9EAEB;
+    min-height: 277px;
+  }
+  /* Khung viền nâu vàng nổi bật cho ô Cung MỆNH (C.Tuất) */
+  .cung-cell.is-menh-cell {
+    box-shadow: inset 0 0 0 2px #9A6700;
+    z-index: 15;
+  }
+  .horoscope-inner {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    padding-top: 12px;
+    padding-bottom: 12px;
+    height: 100%;
+    position: relative;
+  }
+  .cung-header {
+    display: grid;
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+    padding-left: 6px;
+    padding-right: 6px;
+    align-items: center;
+  }
+  .cung-canchi {
+    font-size: 12px;
+    line-height: 18px;
+    font-weight: 600;
+  }
+  .cung-chu-wrap {
+    grid-column: span 3 / span 3;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+  }
+  .cung-chu {
+    text-transform: uppercase;
+    font-weight: 700;
+    color: #000000;
+    font-size: 12px;
+    line-height: 18px;
+    text-align: center;
+  }
+  .cung-chu.is-menh-chu {
+    color: #B45309;
+  }
+  .than-badge {
+    padding: 0 3px;
+    background-color: #DC2626;
+    color: #FFFFFF;
+    font-size: 11px;
+    line-height: 17px;
+    font-weight: 600;
+  }
+  .cung-daihan {
+    position: relative;
+    font-size: 12px;
+    line-height: 18px;
+    font-weight: 600;
+    text-align: right;
+    color: #181D27;
+  }
+  /* T.1 tới T.12 nằm ngay dưới số năm Đại Vận ở góc trên phải mỗi cung */
+  .cung-thang {
+    position: absolute;
+    top: 15px;
+    right: 0;
+    font-size: 10.5px;
+    line-height: 14px;
+    font-weight: 600;
+    color: #535862;
+    white-space: nowrap;
+  }
+  .chinh-tinh-box {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    min-height: 36px;
+    margin-top: -5px;
+    margin-bottom: -4px;
+  }
+  .chinh-tinh {
+    font-size: 14.5px;
+    line-height: 18px;
+    font-weight: 700;
+  }
+  .phu-tinh-cols {
+    display: flex;
+    flex: 1;
+    justify-content: space-between;
+    gap: 8px;
+    padding-left: 6px;
+    padding-right: 6px;
+  }
+  /* padding-bottom: 14px bảo vệ vùng nhãn TH.<Chi> không bao giờ bị sao Phụ Tinh đè lên dù có tới 12 sao */
+  .phu-col {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    min-height: 166px;
+    padding-bottom: 14px;
+  }
+  .phu-tinh {
+    font-size: 12px;
+    line-height: 16.5px;
+  }
+  /* Tự động thu gọn line-height khi cột có 10 sao hoặc 11-12 sao để vừa khít khung 166px mà không làm giãn chiều cao cung */
+  .phu-col:has(.phu-tinh:nth-child(10)) .phu-tinh {
+    font-size: 11.5px;
+    line-height: 14.5px;
+  }
+  .phu-col:has(.phu-tinh:nth-child(11)) .phu-tinh {
+    font-size: 11px;
+    line-height: 12.6px;
+  }
+  .cung-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 4px;
+    padding-left: 6px;
+    padding-right: 6px;
+  }
+  .tieu-han {
+    font-size: 11px;
+    line-height: 20px;
+    font-weight: 500;
+    color: #181D27;
+    white-space: nowrap;
+    text-align: left;
+  }
+  .tieu-han.is-active-dv {
+    color: #B45309;
+    font-weight: 700;
+  }
+  .trang-sinh {
+    font-size: 12.5px;
+    line-height: 20px;
+    font-weight: 600;
+    text-align: center;
+    white-space: nowrap;
+  }
+  .nguyet-han {
+    position: relative;
+    font-size: 11px;
+    line-height: 20px;
+    font-weight: 500;
+    text-align: right;
+    color: #181D27;
+    white-space: nowrap;
+  }
+  .nguyet-han.is-active-ln {
+    color: #B91C1C;
+    font-weight: 700;
+  }
+  /* Nhãn TH. <Chi> nằm ngay bên trên LN. ở góc dưới phải mỗi cung */
+  .tieu-han-chi {
+    position: absolute;
+    bottom: 16px;
+    right: 0;
+    font-size: 10.5px;
+    line-height: 14px;
+    font-weight: 600;
+    color: #535862;
+    white-space: nowrap;
+  }
+  .tieu-han-chi.is-active-th {
+    color: #B91C1C;
+    font-weight: 700;
+  }
+  .tuan-triet-badge {
+    position: absolute;
+    padding: 0 8px;
+    font-size: 12px;
+    line-height: 18px;
+    font-weight: 600;
+    background-color: #000000;
+    color: #FFFFFF;
+    z-index: 20;
+    white-space: nowrap;
+  }
+  /* Thiên Bàn */
+  #thien_ban {
+    grid-column: 2 / span 2;
+    grid-row: 2 / span 2;
+    position: relative;
+    z-index: 10;
+    border: 1px solid #D5D7DA;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 10px;
+    padding: 26px 38px 26px 38px;
+  }
+  .tb-main-title {
+    font-family: 'Charm', serif;
+    color: #1F2937;
+    font-size: 32px;
+    line-height: 38px;
+    font-weight: 700;
+    text-align: center;
+    margin: 0 auto 2px auto;
+  }
+  .tb-group {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  /* Chia 3 cột tối ưu để "Lai nhân cung" và "0 giờ 30 phút" luôn nằm trên 1 dòng */
+  .tb-row {
+    display: grid;
+    grid-template-columns: 102px 116px 1fr;
+    gap: 14px;
+    align-items: baseline;
+  }
+  .tb-label {
+    font-size: 14px;
+    line-height: 20px;
+    font-weight: 400;
+    color: #1F2937;
+    white-space: nowrap;
+  }
+  .tb-val {
+    font-size: 14px;
+    line-height: 20px;
+    font-weight: 700;
+    color: #181D27;
+    white-space: nowrap;
+  }
+  .tb-span-2 {
+    grid-column: span 2 / span 2;
+  }
+  .tb-flex-between {
+    display: flex;
+    justify-content: space-between;
+  }
+  .tb-flex-col {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+  .legend-bar {
+    display: flex;
+    justify-content: space-between;
+    border: 1px solid #D5D7DA;
+    border-top: 0;
+    padding: 12px 16px;
+  }
+  .legend-left, .legend-right {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 16px;
+    line-height: 24px;
+  }
+  .legend-left p::first-letter {
+    color: #F04438;
+  }
+  .swatch-item {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    font-size: 14px;
+    line-height: 20px;
+  }
+  .swatch {
+    width: 14px;
+    height: 14px;
+    display: inline-block;
+  }
